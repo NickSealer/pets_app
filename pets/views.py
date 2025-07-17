@@ -1,4 +1,5 @@
 from django.views.generic.edit import CreateView
+from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.urls import reverse_lazy
@@ -20,3 +21,15 @@ class CreatePetView(LoginRequiredMixin, CreateView):
   def form_invalid(self, form):
     messages.error(self.request, 'Invalid pet!')
     return super().form_invalid(form)
+  
+class ListPetsView(LoginRequiredMixin, ListView):
+  model = Pet
+  template_name = 'pets/pets.html'
+  context_object_name = 'pets'
+  ordering = ['-name']
+  paginate_by = 10
+  
+  def get_queryset(self):
+    return Pet.objects.filter(owner=self.request.user)
+  
+  
