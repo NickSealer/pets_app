@@ -1,6 +1,6 @@
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic import ListView, DetailView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
 from django.urls import reverse_lazy
 from .forms import PetForm
@@ -36,6 +36,27 @@ class DetailPetView(LoginRequiredMixin, DetailView):
   model = Pet
   template_name = 'pets/pet.html'
   context_object_name = 'pet'
+  
+  def get_queryset(self):
+    return Pet.objects.filter(owner=self.request.user)
+  
+class UpdatePetView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+  model = Pet
+  form_class = PetForm
+  template_name = 'pets/edit.html'
+  success_url = reverse_lazy('pets')
+  
+  def form_valid(self, form):
+    messages.success(self.request, 'Pet updated succesful!')
+    return super().form_valid(form)
+  
+  def form_invalid(self, form):
+    messages.error(self.request, 'Invalid pet!')
+    return super().form_invalid(form)
+  
+  def test_func(self):
+    pet = self.get_object()
+    return self.request.user == pet.owner
   
   def get_queryset(self):
     return Pet.objects.filter(owner=self.request.user)

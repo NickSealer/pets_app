@@ -1,0 +1,8 @@
+<a href="{% url 'pets' %}">Volver</a>
+<h1>Editando {{pet.name}}</h1>
+
+<form method="post">
+  {% csrf_token %}
+  {{form.as_p}}
+  <button type="submit">Actualizar</button>
+</form>

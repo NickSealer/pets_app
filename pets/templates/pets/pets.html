@@ -16,6 +16,7 @@
         <td>{{pet.specie}}</td>
         <td>
           <a href="{% url 'pet' pet.pk %}">Ver</a>
+          <a href="{% url 'edit_pet' pet.pk %}">Editar</a>
         </td>
       </tr>
     {% endfor %}
