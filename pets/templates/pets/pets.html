@@ -1,28 +1,32 @@
-<h1>Pets</h1>
+{% extends 'base.html' %}
+{% block title %}Mis Mascotas{% endblock %}
 
-<table>
-  <caption>Mis Mascotas</caption>
-  <thead>
-    <th>Nombre</th>
-    <th>Edad</th>
-    <th>Especie</th>
-    <th>Options</th>
-  </thead>
-  <tbody>
-    {% for pet in pets %}
-      <tr>
-        <td>{{pet.name}}</td>
-        <td>{{pet.age}} {{pet.age_unit}}</td>
-        <td>{{pet.specie}}</td>
-        <td>
-          <button><a href="{% url 'pet' pet.pk %}" style="text-decoration: none;">Ver</a></button>
-          <button><a href="{% url 'edit_pet' pet.pk %}" style="text-decoration: none;">Editar</a></button>
-          <form method="post" action="{% url 'delete_pet' pet.pk %}" style="display: inline;">
-            {% csrf_token %}
-            <button type="submit" onclick="return confirm('are you sure?');">Eliminar</button>
-          </form>
-        </td>
-      </tr>
-    {% endfor %}
-  </tbody>
-</table>
+{% block content %}
+  <p><a href="{%url 'create_pet'%}">Registrar</a></p>
+  <table>
+    <caption>Mis Mascotas</caption>
+    <thead>
+      <th>Nombre</th>
+      <th>Edad</th>
+      <th>Especie</th>
+      <th>Options</th>
+    </thead>
+    <tbody>
+      {% for pet in pets %}
+        <tr>
+          <td>{{pet.name}}</td>
+          <td>{{pet.age}} {{pet.age_unit}}</td>
+          <td>{{pet.specie}}</td>
+          <td>
+            <button><a href="{% url 'pet' pet.pk %}" style="text-decoration: none;">Ver</a></button>
+            <button><a href="{% url 'edit_pet' pet.pk %}" style="text-decoration: none;">Editar</a></button>
+            <form method="post" action="{% url 'delete_pet' pet.pk %}" style="display: inline;">
+              {% csrf_token %}
+              <button type="submit" onclick="return confirm('are you sure?');">Eliminar</button>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

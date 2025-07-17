@@ -1,8 +1,14 @@
-<a href="{% url 'pets' %}">Volver</a>
-<h1>Editando {{pet.name}}</h1>
+{% extends 'base.html' %}
+{% block title %}Editar a {{pet.name}}{% endblock %}
 
-<form method="post">
-  {% csrf_token %}
-  {{form.as_p}}
-  <button type="submit">Actualizar</button>
-</form>
+{% block content %}
+  <div>
+    <p><a href="{% url 'pets' %}">Volver</a></p>
+    <h1>Editando {{pet.name}}</h1>
+    <form method="post">
+      {% csrf_token %}
+      {{form.as_p}}
+      <button type="submit">Actualizar</button>
+    </form>
+  </div>
+{% endblock %}

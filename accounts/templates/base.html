@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}LaVet{% endblock %}</title>
+</head>
+<body>
+  <header>
+    <h1>LaVet</h1>
+    {% if user.is_authenticated %}
+      <p>
+        Hola!! {{user.username}} | <a href="{% url 'dashboard' %}">Dashboard</a> | <a href="{%url 'pets'%}">Mascotas</a>
+      </p>
+      <form method="POST" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+      </form>
+    {% else %}
+      <a href="{% url 'login' %}">Login</a>
+    {% endif %}
+  </header>
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>
