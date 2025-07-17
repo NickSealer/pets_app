@@ -1,5 +1,5 @@
 from django.views.generic.edit import CreateView
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.urls import reverse_lazy
@@ -28,6 +28,14 @@ class ListPetsView(LoginRequiredMixin, ListView):
   context_object_name = 'pets'
   ordering = ['-name']
   paginate_by = 10
+  
+  def get_queryset(self):
+    return Pet.objects.filter(owner=self.request.user)
+  
+class DetailPetView(LoginRequiredMixin, DetailView):
+  model = Pet
+  template_name = 'pets/pet.html'
+  context_object_name = 'pet'
   
   def get_queryset(self):
     return Pet.objects.filter(owner=self.request.user)

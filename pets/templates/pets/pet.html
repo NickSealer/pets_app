@@ -1,0 +1,26 @@
+<a href="{% url 'pets' %}">volver</a>
+<h2>{{pet.name}}</h2>
+
+<div>
+  <p>
+    <strong>Nombre:</strong> {{pet.name}}
+  </p>
+  <p>
+    <strong>Especie:</strong> {{pet.specie}}
+  </p>
+  <p>
+    <strong>Edad:</strong> {{pet.age}} {{pet.age_unit}}
+  </p>
+  <p>
+    <strong>Color:</strong> {{pet.primary_color}} - {{pet.secondary_color}}
+  </p>
+  <p>
+    <strong>Dueño:</strong> {{pet.owner}}
+  </p>
+  <p>
+    <strong>Registrado:</strong> {{pet.created_at}}
+  </p>
+  <p>
+    <strong>Actualizado:</strong> {{pet.updated_at}}
+  </p>
+</div>
