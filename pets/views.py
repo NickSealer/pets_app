@@ -1,4 +1,4 @@
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
@@ -61,4 +61,14 @@ class UpdatePetView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
   def get_queryset(self):
     return Pet.objects.filter(owner=self.request.user)
   
+
+class DeletePetView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+  model = Pet
+  success_url = reverse_lazy('pets')
   
+  def test_func(self):
+    pet = self.get_object()
+    return self.request.user == pet.owner
+  
+  def get_queryset(self):
+    return Pet.objects.filter(owner=self.request.user)

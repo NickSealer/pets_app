@@ -15,8 +15,12 @@
         <td>{{pet.age}} {{pet.age_unit}}</td>
         <td>{{pet.specie}}</td>
         <td>
-          <a href="{% url 'pet' pet.pk %}">Ver</a>
-          <a href="{% url 'edit_pet' pet.pk %}">Editar</a>
+          <button><a href="{% url 'pet' pet.pk %}" style="text-decoration: none;">Ver</a></button>
+          <button><a href="{% url 'edit_pet' pet.pk %}" style="text-decoration: none;">Editar</a></button>
+          <form method="post" action="{% url 'delete_pet' pet.pk %}" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" onclick="return confirm('are you sure?');">Eliminar</button>
+          </form>
         </td>
       </tr>
     {% endfor %}
